@@ -166,6 +166,9 @@ window.onload = function() {
       // report on the success of opening the transaction
       transaction.oncomplete = function(event) {
         note.innerHTML += '<li>Transaction completed: database modification finished.</li>';
+
+        // update the display of data to show the newly added item, by running displayData() again.
+        displayData(); 
       };
 
       transaction.onerror = function(event) {
@@ -192,9 +195,6 @@ window.onload = function() {
         };
          
       };
-      
-      // update the display of data to show the newly added item, by running displayData() again.
-      displayData(); 
     };
   
   function deleteItem(event) {
