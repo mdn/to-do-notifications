@@ -1,26 +1,26 @@
-var note = document.getElementById('notifications');
-var db;
+const note = document.getElementById('notifications');
+let db;
 
-var newItem = [
+const newItem = [
       { taskTitle: "", hours: 0, minutes: 0, day: "", month: "", year: 0, passed: "" }
     ];
     
-var increment = 0;
+const increment = 0;
 
-var taskList = document.getElementById('task-list');
+const taskList = document.getElementById('task-list');
 
-var taskForm = document.getElementById('task-form');
-var title = document.getElementById('title');
+const taskForm = document.getElementById('task-form');
+const title = document.getElementById('title');
 
-var hours = document.getElementById('deadline-hours');
-var minutes = document.getElementById('deadline-minutes');
-var day = document.getElementById('deadline-day');
-var month = document.getElementById('deadline-month');
-var year = document.getElementById('deadline-year');
+const hours = document.getElementById('deadline-hours');
+const minutes = document.getElementById('deadline-minutes');
+const day = document.getElementById('deadline-day');
+const month = document.getElementById('deadline-month');
+const year = document.getElementById('deadline-year');
 
-var submit = document.getElementById('submit');
+const submit = document.getElementById('submit');
 
-window.onload = function() {
+window.onload = () => {
   note.innerHTML += '<li>App initialised.</li>';
   // In the following line, you should include the prefixes of implementations you want to test.
   window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
@@ -32,14 +32,14 @@ window.onload = function() {
 
 
   // Let us open our database
-  var request = window.indexedDB.open("toDoList", 4);
+  const request = window.indexedDB.open("toDoList", 4);
 
   // these two event handlers act on the database being opened successfully, or not
-  request.onerror = function(event) {
+  request.onerror = event => {
     note.innerHTML += '<li>Error loading database.</li>';
   };
   
-  request.onsuccess = function(event) {
+  request.onsuccess = event => {
     note.innerHTML += '<li>Database initialised.</li>';
     db = request.result;
     displayData(db);
@@ -49,16 +49,16 @@ window.onload = function() {
   // Either one has not been created before, or a new version number has been submitted via the
   // window.indexedDB.open line above
   //it is only implemented in recent browsers
-  request.onupgradeneeded = function(event) { 
-    var db = event.target.result;
+  request.onupgradeneeded = event => { 
+    const db = event.target.result;
     
-    db.onerror = function(event) {
+    db.onerror = event => {
       note.innerHTML += '<li>Error loading database.</li>';
     };
 
     // Create an objectStore for this database
     
-    var objectStore = db.createObjectStore("toDoList", { keyPath: "taskTitle" });
+    const objectStore = db.createObjectStore("toDoList", { keyPath: "taskTitle" });
     
     // define what data items the objectStore will contain
     
@@ -77,11 +77,11 @@ window.onload = function() {
     taskList.innerHTML = "";
   
     
-    var objectStore = db.transaction('toDoList').objectStore('toDoList');
-    objectStore.openCursor().onsuccess = function(event) {
-      var cursor = event.target.result;
+    const objectStore = db.transaction('toDoList').objectStore('toDoList');
+    objectStore.openCursor().onsuccess = event => {
+      const cursor = event.target.result;
         if(cursor) {
-          var listItem = document.createElement('li');
+          const listItem = document.createElement('li');
           
           if(cursor.value.day == 1 || cursor.value.day == 21 || cursor.value.day == 31) {
             daySuffix = "st";
@@ -93,13 +93,13 @@ window.onload = function() {
             daySuffix = "th";  
           }
           
-          listItem.innerHTML = cursor.value.taskTitle + ' — ' + cursor.value.hours + ':' + cursor.value.minutes + ', ' + cursor.value.month + ' ' + cursor.value.day + daySuffix + ' ' + cursor.value.year + '.';
+          listItem.innerHTML = `${cursor.value.taskTitle} — ${cursor.value.hours}:${cursor.value.minutes}, ${cursor.value.month} ${cursor.value.day}${daySuffix} ${cursor.value.year}.`;
           taskList.appendChild(listItem);  
-          var deleteButton = document.createElement('button');
+          const deleteButton = document.createElement('button');
           listItem.appendChild(deleteButton);
           deleteButton.innerHTML = 'X';
           deleteButton.setAttribute('data-task', cursor.value.taskTitle);
-          deleteButton.onclick = function(event) {
+          deleteButton.onclick = event => {
             deleteItem(event);
           }
           cursor.continue();
@@ -119,26 +119,26 @@ window.onload = function() {
       return;
     } else {
       
-      var newItem = [
+      const newItem = [
         { taskTitle: title.value, hours: hours.value, minutes: minutes.value, day: day.value, month: month.value, year: year.value, passed: 'No' }
       ];
         
       console.log(newItem);
 
-      var transaction = db.transaction(["toDoList"], "readwrite");
+      const transaction = db.transaction(["toDoList"], "readwrite");
     
-      transaction.oncomplete = function(event) {
+      transaction.oncomplete = event => {
         note.innerHTML += '<li>Transaction opened for task addition.</li>';
       };
 
-      transaction.onerror = function(event) {
+      transaction.onerror = event => {
         note.innerHTML += '<li>Transaction not opened due to error. Duplicate items not allowed.</li>';
       };
 
-      var objectStore = transaction.objectStore("toDoList");
-      var request = objectStore.add(newItem[0]);        
-        request.onsuccess = function(event) {
-          var date = new Date(month.value + " " + day.value + ", " + year.value + " " + hours.value + ":" + minutes.value + ":00");
+      const objectStore = transaction.objectStore("toDoList");
+      const request = objectStore.add(newItem[0]);        
+        request.onsuccess = event => {
+          const date = new Date(`${month.value} ${day.value}, ${year.value} ${hours.value}:${minutes.value}:00`);
           alert(date);
           scheduleAlarm(title.value,date);
         
@@ -156,24 +156,24 @@ window.onload = function() {
     }
   
   function deleteItem(event) {
-    var dataTask = event.target.getAttribute('data-task');
+    const dataTask = event.target.getAttribute('data-task');
     event.target.parentNode.parentNode.removeChild(event.target.parentNode);
-    var request = db.transaction(["toDoList"], "readwrite").objectStore("toDoList").delete(dataTask);
-    request.onsuccess = function(event) {
-      note.innerHTML += '<li>Task \"' + dataTask + '\" deleted.</li>';
+    const request = db.transaction(["toDoList"], "readwrite").objectStore("toDoList").delete(dataTask);
+    request.onsuccess = event => {
+      note.innerHTML += `<li>Task "${dataTask}" deleted.</li>`;
     };
     
   }
   
   
   function checkDeadlines() {
-    var now = new Date();
+    const now = new Date();
     
-    var minuteCheck = now.getMinutes();
-    var hourCheck = now.getHours();
-    var dayCheck = now.getDate();
-    var monthCheck = now.getMonth();
-    var yearCheck = now.getFullYear();
+    const minuteCheck = now.getMinutes();
+    const hourCheck = now.getHours();
+    const dayCheck = now.getDate();
+    const monthCheck = now.getMonth();
+    const yearCheck = now.getFullYear();
     
     console.log(minuteCheck);
     console.log(hourCheck);
@@ -181,9 +181,9 @@ window.onload = function() {
     console.log(monthCheck);
     console.log(yearCheck);
     
-    var objectStore = db.transaction(['toDoList'], "readwrite").objectStore('toDoList');
-    objectStore.openCursor().onsuccess = function(event) {
-      var cursor = event.target.result;
+    const objectStore = db.transaction(['toDoList'], "readwrite").objectStore('toDoList');
+    objectStore.openCursor().onsuccess = event => {
+      const cursor = event.target.result;
         if(cursor) {
         
         switch(cursor.value.month) {
@@ -240,7 +240,7 @@ window.onload = function() {
   }
   
   function scheduleAlarm(title,date) {
-    var request = navigator.mozAlarms.add(date, "honorTimezone", data);
+    const request = navigator.mozAlarms.add(date, "honorTimezone", data);
   }
   
   function createNotification(title) {
@@ -253,7 +253,7 @@ window.onload = function() {
     // Let's check if the user is okay to get some notification
     else if (Notification.permission === "granted") {
       // If it's okay let's create a notification
-      var notification = new Notification('HEY! Your task "' + title + '" is now overdue. Deleting.');
+      const notification = new Notification(`HEY! Your task "${title}" is now overdue. Deleting.`);
       window.navigator.vibrate(500);
     }
 
@@ -261,7 +261,7 @@ window.onload = function() {
     // Note, Chrome does not implement the permission static property
     // So we have to check for NOT 'denied' instead of 'default'
     else if (Notification.permission !== 'denied') {
-      Notification.requestPermission(function (permission) {
+      Notification.requestPermission(permission => {
 
         // Whatever the user answers, we make sure Chrome stores the information
         if(!('permission' in Notification)) {
@@ -270,7 +270,7 @@ window.onload = function() {
 
         // If the user is okay, let's create a notification
         if (permission === "granted") {
-          var notification = new Notification('HEY! Your task "' + title + '" is now overdue. Deleting');
+          const notification = new Notification(`HEY! Your task "${title}" is now overdue. Deleting`);
           window.navigator.vibrate(500);
         }
       });
@@ -281,8 +281,8 @@ window.onload = function() {
   }
   
   function updatePassed(title) {
-    var request = db.transaction(["toDoList"], "readwrite").objectStore("toDoList").delete(title);
-    var removeListItem = document.querySelector('button[data-task="'+title+'"]');
+    const request = db.transaction(["toDoList"], "readwrite").objectStore("toDoList").delete(title);
+    const removeListItem = document.querySelector(`button[data-task="${title}"]`);
     removeListItem.parentNode.parentNode.removeChild(removeListItem.parentNode);
     note.innerHTML += '<li>Deadline passed; item deleted.</li>';
   }
