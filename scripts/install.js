@@ -1,13 +1,13 @@
 function install(ev) {
   ev.preventDefault();
   // define the manifest URL
-  var manifest_url = "http://people.opera.com/~cmills/to-do-list/manifest.webapp";
+  const manifest_url = "http://people.opera.com/~cmills/to-do-list/manifest.webapp";
   // install the app
-  var installLocFind = navigator.mozApps.install(manifest_url);
-  installLocFind.onsuccess = function(data) {
+  const installLocFind = navigator.mozApps.install(manifest_url);
+  installLocFind.onsuccess = data => {
     // App is installed, do something 
   };
-  installLocFind.onerror = function() {
+  installLocFind.onerror = () => {
     // App wasn't installed, info is in
     // installapp.error.name
     alert(installapp.error.name);
@@ -15,10 +15,10 @@ function install(ev) {
 };
 
 // get a reference to the button and call install() on click
-var button = document.getElementById('install');
+const button = document.getElementById('install');
 
-var installCheck = navigator.mozApps.checkInstalled("http://people.opera.com/~cmills/to-do-list/manifest.webapp");
-installCheck.onsuccess = function() {
+const installCheck = navigator.mozApps.checkInstalled("http://people.opera.com/~cmills/to-do-list/manifest.webapp");
+installCheck.onsuccess = () => {
   if(installCheck.result) {
     button.style.display = "none";
   } else {
