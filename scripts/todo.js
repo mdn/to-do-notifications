@@ -1,6 +1,56 @@
 // create a reference to the notifications list in the bottom of the app; we will write database messages into this list by
 //appending list items as children of this element
+
 const note = document.getElementById('notifications');
+// const darkMode = document.getElementById("darkMode");
+const toolBar = document.getElementById("toolbar");
+const svgCicle = document.getElementById("svgImg");
+
+let toggleCounter = 0;
+let class_List = ['default','dark'];
+
+let bgColors = ['#FFEE00' , 'rgb(26,26,26)'];
+let colorsText = ['black','snow'];
+let toolBarBackground = ['#FF6400' , 'rgb(12,12,12)'];
+let toolBarBorders = ['#FF6400','snow'];
+
+let elementBody = document.body;
+// let elementBody = document.html;
+
+function toggleClass(){
+  toggleCounter+=1;
+  var bgColor = bgColors[toggleCounter%2];
+  var txtColor = colorsText[toggleCounter%2] ; 
+  console.log("bg ->"+bgColor+" , colors ->"+txtColor);
+
+  // console.log("now class ->"+class_List[toggleCounter%2]);
+  // alert("switched to darkmode");
+  // elementBody.classList.toggle(class_List[toggleCounter%2]);
+  elementBody.style.backgroundColor = bgColor;
+  elementBody.style.color = txtColor;
+  elementBody.style.borderLeft = "2px solid "+toolBarBackground[toggleCounter%2];
+  elementBody.style.borderRight = "2px solid "+toolBarBackground[toggleCounter%2];
+
+  note.style.backgroundColor = bgColor;
+  note.style.color = txtColor;
+  // toolBar.style.backgroundColor = bgColor;
+  toolBar.style.color = txtColor;
+  toolBar.style.borderTop = "2px solid "+toolBarBackground[(toggleCounter)%2];
+  toolBar.style.borderBottom = "2px solid "+toolBarBackground[(toggleCounter)%2];
+  toolBar.style.backgroundColor = toolBarBackground[toggleCounter%2];
+
+  // border-top: 2px solid #FF6400;
+  // border-bottom: 2px solid #FF6400;
+  svgCicle.style.fill = toolBarBackground[toggleCounter%2];
+  svgCicle.style.stroke = txtColor;
+
+  document.documentElement.style.backgroundColor = bgColor ;
+
+}
+// darkMode.addEventListener('click',toggleClass);
+svgCicle.addEventListener('click',toggleClass);
+
+
 
 // create an instance of a db object for us to store the IDB data in
 let db;
