@@ -245,3 +245,20 @@ button, input[type="submit"], select {
   }
 
 }
+
+#darkMode{
+  line-height: 1.8;
+  font-size: 1.3rem;
+  border-radius: 5px;
+  border: 1px solid black;
+  color: black;
+  text-shadow: 1px 1px 1px black;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: inset 0px 5px 3px rgba(255,255,255,0.2),
+              inset 0px -5px 3px rgba(0,0,0,0.2);
+  /* position:fixed; */
+  position: absolute;
+  /* bottom: 0.3rem; */
+  right: 0.3rem;
+
+}
