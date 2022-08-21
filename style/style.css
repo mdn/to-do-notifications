@@ -9,13 +9,14 @@ html {
   height: 100%;
   font-size: 10px;
   font-family: 'Donegal One', serif;
-  background: #FFEE00;
+  background: #ffc862;
+
 }
 
 body {
   width: 50rem;
   position: relative;
-  background: #FFEE00;
+  background: #55ff9cd6;
   margin: 0 auto;
   border-left: 2px solid #FF6400;
   border-right: 2px solid #FF6400;
@@ -23,17 +24,18 @@ body {
 
 h1, h2 {
   text-align: center;
-  background: #FF6400;
   font-family: 'Lily Script One', cursive;
 }
 
 h1 {
   font-size: 6rem;
   margin: 0;
-  background: -webkit-linear-gradient(top, #FF9640, #FF6400);
+  /* background: -webkit-linear-gradient(top, #FF9640, #FF6400);
   background: -moz-linear-gradient(top, #FF9640, #FF6400);
   background: -ms-linear-gradient(top, #FF9640, #FF6400);
   background: linear-gradient(top, #FF9640, #FF6400);
+   */
+  background: #ffc862;
   text-shadow: 1px 1px 1px #FF6400, 2px 2px 1px black;
 }
 
@@ -47,7 +49,8 @@ h2 {
   position: relative;
   height: 6rem;
   width: 100%;
-  background: #FF6400;
+  background: #55ff9cd6;
+  
   border-top: 2px solid #FF6400;
   border-bottom: 2px solid #FF6400;
 }
@@ -66,15 +69,17 @@ h2 {
 
 #enable {
   position: absolute;
-  bottom: 0.3rem;
-  right: 0.3rem;
+  bottom: 1.3rem;
+  right: 1.833rem;
+  background: #ffc862;
+
 }
 
 #notifications {
   margin: 0;
   position: relative;
   padding: 0.3rem;
-  background: #FFEE00;
+  background: #6be9a0;
   position: absolute;
   top: 0rem;
   left: 0rem;
@@ -82,6 +87,8 @@ h2 {
   width: 50%;
   overflow: auto;
   line-height: 1.2;
+  background: #ffc862;
+
 }
 
 #notifications li {
@@ -91,7 +98,8 @@ h2 {
 /* || new item form styling */
 
 .form-box {
-  background: #FF6400;
+  background: #ffc862;
+
   width: 85%;
   padding: 1rem;
   margin: 2rem auto;
@@ -166,6 +174,7 @@ form div input[type="submit"] {
   list-style-type: none;
   padding: 1rem;
   border-bottom: 2px solid #FF6400;
+  
 }
 
 .task-box li:last-child {
@@ -242,6 +251,10 @@ button, input[type="submit"], select {
 
   #enable {
     right: 1rem;
+  }
+
+  .task-box {
+    font-size: 1.48rem;
   }
 
 }
